@@ -2,7 +2,7 @@ import React from "react";
 import "./SearchPage.css";
 import { useStateValue } from "../StateProvider";
 import { useGoogleSearch } from "../useGoogleSearch";
-import response from "../sampleResponse";
+import response from "../sampleResponse"; // needed for mock api call while development
 import { Link } from "react-router-dom";
 import Search from "../components/Search";
 import SearchIcon from "@material-ui/icons/Search";
@@ -11,6 +11,7 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import RoomIcon from "@material-ui/icons/Room";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 function SearchPage() {
   // retrieving the search term value from the data layer
@@ -18,11 +19,12 @@ function SearchPage() {
 
   // retrieving the search results data from Google
   // LIVE API CALL
-  // const { data } = useGoogleSearch(term);
+  const { data } = useGoogleSearch(term);
 
+  /*
   // to work on the mock api call
   const data = response;
-
+  */
   return (
     <div className="searchPage">
       <div className="searchPage__header">
@@ -74,7 +76,37 @@ function SearchPage() {
           </div>
         </div>
       </div>
-      <div className="searchPage__results"></div>
+
+      {/* rendering the results only if we have been provided with a search term in the first place */}
+      {term && (
+        <div className="searchPage__results">
+          <p className="searchPage__resultStats">
+            About {data?.searchInformation.formattedTotalResults} results in{" "}
+            {data?.searchInformation.formattedSearchTime} seconds for {term}
+          </p>
+
+          {data?.items.map((item) => (
+            <div className="searchPage__result">
+              <a className="searchPage__resultLink" href={item.link}>
+                {item.pagemap?.cse_image?.length > 0 &&
+                  item.pagemap?.cse_image[0]?.src && (
+                    <img
+                      className="searchPage__resultImage"
+                      src={item.pagemap?.cse_image[0]?.src}
+                      alt="Result Image"
+                    ></img>
+                  )}
+                {item.displayLink}
+                <ArrowDropDownIcon />
+              </a>
+              <a className="searchPage__resultTitle" href={item.link}>
+                <h2>{item.title}</h2>
+              </a>
+              <p className="searchPage__resultSnippet">{item.snippet}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
