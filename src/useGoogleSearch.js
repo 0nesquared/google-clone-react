@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import API_KEY from "./keys";
 
-const SEARCH_ENGINE_ID = "55c0c4e88da67a4b3";
+const SEARCH_ENGINE_ID = "Insert your personal SEARCH_ENGINE_ID here";
 
 // custom hook to return data from the Google Search
 export const useGoogleSearch = (term) => {
