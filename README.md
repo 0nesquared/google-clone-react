@@ -51,3 +51,5 @@ We also use React Context API to retrieve the search term entered by the user in
 All the icons and buttons have been used from MaterialUI to get the same look and feel as that of the official Google website, and the font and background-colors have also been kept as close to the original as possible.
 
 ** NOTE ** - To run the same project on your personal system, please replace the API_KEY in the keys.js file by your own custom API key, and the SEARCH_ENGINE_ID in the useGoogleSearch.js file with your search engine id.
+
+**The free version of the Custom Search API from Google will only handle 100 search requests per day**
